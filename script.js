@@ -4,33 +4,109 @@
 //Create the function which compares computers and players selection
 //Print out the result of tha match
 
-let options = ["rock","paper","scissors"]
+const options = ["Rock","Paper","Scissors"]
+const buttons = Array.from(document.querySelectorAll("button"))
+const container = document.querySelector(".container")
+const resultTextDiv = document.createElement("div")
+const scoreTextDiv = document.createElement("div")
+const finalResultDiv = document.createElement("div")
+const tryAgain = document.createElement("button")
+tryAgain.innerText ="Try Again!"
+let countComputer = 0
+let countPlayer = 0
+
+
+
+
+
+
+const onClick = (event) => {
+    player = event.srcElement.id
+    computer = getComputerChoice()
+    //console.log("Your choice: " +player)
+    //console.log("Computer choice: "+ computer)
+    //console.log("GAME:")
+    
+    
+    let game = playRound(computer,player)
+    
+    //console.log(game)
+
+    resultTextDiv.innerText = game
+    scoreTextDiv.innerHTML = 
+    "<span>score:</span>"+"<br />"+
+    "YOUR SCORE: "+ countPlayer+ "<br />" +
+    "COMPUTER SCORE: "+ countComputer
+
+    container.appendChild(resultTextDiv)
+    container.appendChild(scoreTextDiv)
+    endGame()
+
+  }
+
 function getComputerChoice(){
     
     let random = Math.floor(Math.random() * 3);
-    return options[random].toLocaleLowerCase()
+    return options[random]
 }
-function getPlayerChoice(){
-    return  prompt("Choose Rock, Paper or Scissors").toLowerCase()
+
+
+function endGame(){
+    
+    const finalLostMessage = "You are total looser! The game is over"
+    const finalWinnMessage = "You just won againts the most advanced AI. You are a HERO!"
+
+        
+    
+    if(countComputer ===5  || countPlayer===5){
+        if(countComputer>countPlayer){finalResultDiv.innerText = finalLostMessage}
+        if(countPlayer>countComputer){finalResultDiv.innerText = finalWinnMessage}
+        
+        container.appendChild(finalResultDiv)
+        buttons.forEach((button)=>button.disabled = true)
+        container.appendChild(tryAgain)
+        tryAgain.addEventListener("click",gameRestart)
+    }
+}
+
+function gameRestart(){
+    countComputer= 0
+    countPlayer = 0
+    container.removeChild(resultTextDiv)
+    container.removeChild(scoreTextDiv)
+    container.removeChild(finalResultDiv)
+    container.removeChild(tryAgain)
+
+    buttons.forEach((button)=>button.disabled = false)
 }
 
 
 function playRound (computer, player){
 
-    if (options.indexOf(player)<0) return  "Since you chose " + player + " you really don't know how to play this game!"
+
     let loseMessage = "You lose! " + computer + " beats " + player + "!"
     let winMessage =  "You win! " + player + " beats " + computer + "!"
     let tieMessage = computer + " against " + player + " is a tie!"
 
     if (computer === player) return tieMessage
 
-    if (computer === "rock" && player === "scissors" ||
-    computer === "paper" && player === "rock" ||
-    computer === "scissors" && player === "paper") return loseMessage
+    if (
+        computer === "Rock" && player === "Scissors" ||
+        computer === "Paper" && player === "Rock" ||
+        computer === "Scissors" && player === "Paper") 
+        {
+        countComputer+=1
+        
+        return loseMessage
+        }
 
     
-
-    return winMessage
+    else{
+        countPlayer +=1
+        return winMessage
+    }
+    
 }
 
-console.log(playRound(getComputerChoice(),getPlayerChoice()))
+
+buttons.forEach(button=> button.addEventListener("click",onClick))
