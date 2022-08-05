@@ -7,10 +7,12 @@
 const options = ["Rock","Paper","Scissors"]
 const buttons = Array.from(document.querySelectorAll("button"))
 const container = document.querySelector(".container")
-const resultTextDiv = document.createElement("div")
-const scoreTextDiv = document.createElement("div")
-const finalResultDiv = document.createElement("div")
+const resultTextDiv = document.querySelector(".resultTextDiv")
+const scoreTextDiv = document.querySelector(".scoreTextDiv")
+const finalResultDiv = document.querySelector(".finalResultDiv")
+finalResultDiv.classList="finalResultDiv"
 const tryAgain = document.createElement("button")
+tryAgain.classList = "tryAgain"
 tryAgain.innerText ="Try Again!"
 let countComputer = 0
 let countPlayer = 0
@@ -31,12 +33,13 @@ const onClick = (event) => {
     let game = playRound(computer,player)
     
     //console.log(game)
-
-    resultTextDiv.innerText = game
+    resultTextDiv.classList="resultTextDiv"
+    scoreTextDiv.classList='scoreTextDiv'
+    resultTextDiv.innerHTML = game
     scoreTextDiv.innerHTML = 
-    "<span>score:</span>"+"<br />"+
+
     "YOUR SCORE: "+ countPlayer+ "<br />" +
-    "COMPUTER SCORE: "+ countComputer
+    "COMPUTER SCORE: "+ countComputer+ "<br />"
 
     container.appendChild(resultTextDiv)
     container.appendChild(scoreTextDiv)
