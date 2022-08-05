@@ -56,7 +56,7 @@ function getComputerChoice(){
 
 function endGame(){
     
-    const finalLostMessage = "You are total looser! The game is over"
+    const finalLostMessage = "You are a total looser! The game is over!"
     const finalWinnMessage = "You just won againts the most advanced AI. You are a HERO!"
 
         
